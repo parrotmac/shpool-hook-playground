@@ -44,6 +44,14 @@ scripted_bash_run() {
   assert_output --partial "command not found"
 }
 
+@test "running individual prompt_hook elements without eval results in extra quotes" {
+  run scripted_bash_run ". /suite/definitions/pc_simple; . /suite/definitions/hook_array_no_eval; echo ''; (exit 2> /dev/null)"
+  assert_output --partial "\"SIMPLEPROMPT\""
+  assert_output --partial "shpool:yehaw"
+  assert_output --partial "PLAYSTATIONONE"
+  assert_output --partial "exit"
+}
+
 @test "casing on whether HOOK_PROMPT is an array handles a simple prompt correctly" {
   run scripted_bash_run ". /suite/definitions/pc_simple; . /suite/definitions/hook; echo ''; (exit 2> /dev/null)"
   assert_output --partial "SIMPLEPROMPT"
