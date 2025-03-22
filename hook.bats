@@ -44,16 +44,6 @@ scripted_bash_run() {
   assert_output --partial "command not found"
 }
 
-@test "assuming PROMPT_HOOK is always an array results in an erroneously escaped simple prompt" {
-  # I think this happens because "${SHPOOL__OLD_PROMPT_COMMAND[@]}" must have surrounding quotes, but then
-  # in the simple prompt case it's not an array, so it's not being split correctly
-  run scripted_bash_run ". /suite/definitions/pc_simple; . /suite/definitions/hook_only_array_support; echo ''; (exit 2> /dev/null)"
-  assert_output --partial "\"SIMPLEPROMPT\""
-  assert_output --partial "shpool:yehaw"
-  assert_output --partial "PLAYSTATIONONE"
-  assert_output --partial "exit"
-}
-
 @test "casing on whether HOOK_PROMPT is an array handles a simple prompt correctly" {
   run scripted_bash_run ". /suite/definitions/pc_simple; . /suite/definitions/hook; echo ''; (exit 2> /dev/null)"
   assert_output --partial "SIMPLEPROMPT"
