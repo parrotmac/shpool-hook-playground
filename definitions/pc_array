@@ -1,0 +1,2 @@
+PROMPT_COMMAND=([0]="printf \"%s\" \"PROMPT A\"")
+PROMPT_COMMAND+=("printf \"%s\" \"PROMPT B\"")
